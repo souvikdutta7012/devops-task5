@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mypod
+ labels:
+  env: testing
+spec:
+ containers:
+ - name: prometheus
+   image: souvikdutta7012/prometheus:v1
+   volumeMounts:
+    - name: myprompvc
+      mountPath: "/data_prometheus"
+ - name: grafana
+   image: souvikdutta7012/grafana:v1
+   volumeMounts:
+    - name: mygrafpvc
+      mountPath: "/var/lib/grafana"
+ volumes:
+ - name: myprompvc
+   persistentVolumeClaim:
+    claimName: myprompvc
+
+ - name: mygrafpvc
+   persistentVolumeClaim:
+    claimName: mygrafpvc
